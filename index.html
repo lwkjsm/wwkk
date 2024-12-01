@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또 번호 생성기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .lotto-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .ball {
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            border-radius: 50%;
+            background-color: #ffc107;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            display: inline-block;
+            opacity: 0;
+            transform: scale(0);
+            animation: popIn 0.6s forwards ease-in-out;
+        }
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>로또 번호 생성기</h1>
+    <div class="lotto-container" id="lottoContainer"></div>
+    <button onclick="generateLottoNumbers()">번호 생성</button>
+
+    <script>
+        function generateLottoNumbers() {
+            const container = document.getElementById('lottoContainer');
+            container.innerHTML = ''; // 기존 번호 제거
+            const numbers = [];
+            
+            while (numbers.length < 6) {
+                const num = Math.floor(Math.random() * 45) + 1;
+                if (!numbers.includes(num)) {
+                    numbers.push(num);
+                }
+            }
+
+            numbers.sort((a, b) => a - b); // 번호 정렬
+
+            numbers.forEach((num, index) => {
+                setTimeout(() => {
+                    const ball = document.createElement('div');
+                    ball.classList.add('ball');
+                    ball.textContent = num;
+                    container.appendChild(ball);
+                }, index * 1000); // 1초 간격으로 공 표시
+            });
+        }
+    </script>
+</body>
+</html>
